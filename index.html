@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +65,6 @@
             cursor: pointer;
         }
 
-        /* Hidden Content */
         #card {
             display: none;
             text-align: center;
@@ -75,6 +73,7 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 400px;
+            position: relative;
         }
 
         h1 { color: var(--dark-pink); }
@@ -84,7 +83,6 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            position: relative;
         }
 
         button {
@@ -93,11 +91,18 @@
             border-radius: 10px;
             border: none;
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        #yesBtn { background-color: #4CAF50; color: white; }
-        #noBtn { background-color: #f44336; color: white; position: absolute; left: 160px;}
+        #yesBtn { background-color: #4CAF50; color: white; transition: 0.3s; }
+        #yesBtn:hover { transform: scale(1.2); }
+
+        /* The No button starts normally but becomes fixed once interaction starts */
+        #noBtn { 
+            background-color: #f44336; 
+            color: white; 
+            transition: 0.1s ease; 
+            z-index: 9999;
+        }
 
         #finalMessage {
             display: none;
@@ -119,7 +124,7 @@
             <h1>Hi Amie! <br> Will you be my Valentine? 💜</h1>
             <div class="buttons">
                 <button id="yesBtn" onclick="sayYes()">Yes</button>
-                <button id="noBtn" onmouseover="moveNo()">No</button>
+                <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
             </div>
         </div>
         <div id="finalMessage">
@@ -135,10 +140,13 @@
 
         function moveNo() {
             const noBtn = document.getElementById('noBtn');
-            // Calculate random positions within the screen
+            
+            // This calculates the available width and height of the entire browser window
+            // Subtracting button width/height prevents it from going off-edge
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
+            // "Fixed" makes it jump relative to the screen, not the card
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
@@ -147,6 +155,9 @@
         function sayYes() {
             document.getElementById('questionArea').style.display = 'none';
             document.getElementById('finalMessage').style.display = 'block';
+            
+            // Remove the No button from existence once she says Yes!
+            document.getElementById('noBtn').style.display = 'none';
         }
     </script>
 </body>
