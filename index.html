@@ -1,1 +1,153 @@
-# valentine
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Amie</title>
+    <style>
+        :root {
+            --primary-pink: #ffafbd;
+            --dark-pink: #ff3b6c;
+            --envelope-color: #f08080;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Envelope Styling */
+        .container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: var(--envelope-color);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .envelope-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-top: 110px solid var(--envelope-color);
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+
+        .open-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            padding: 10px 20px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            color: var(--dark-pink);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Hidden Content */
+        #card {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+
+        h1 { color: var(--dark-pink); }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #yesBtn { background-color: #4CAF50; color: white; }
+        #noBtn { background-color: #f44336; color: white; position: absolute; left: 160px;}
+
+        #finalMessage {
+            display: none;
+            font-size: 1.5rem;
+            color: #5d2a8e;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="envelopeContainer">
+        <div class="envelope-wrapper"></div>
+        <button class="open-btn" onclick="openEnvelope()">OPEN</button>
+    </div>
+
+    <div id="card">
+        <div id="questionArea">
+            <h1>Hi Amie! <br> Will you be my Valentine? 💜</h1>
+            <div class="buttons">
+                <button id="yesBtn" onclick="sayYes()">Yes</button>
+                <button id="noBtn" onmouseover="moveNo()">No</button>
+            </div>
+        </div>
+        <div id="finalMessage">
+            Thanks! Chang 🫶🏼💜
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            document.getElementById('envelopeContainer').style.display = 'none';
+            document.getElementById('card').style.display = 'block';
+        }
+
+        function moveNo() {
+            const noBtn = document.getElementById('noBtn');
+            // Calculate random positions within the screen
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function sayYes() {
+            document.getElementById('questionArea').style.display = 'none';
+            document.getElementById('finalMessage').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
